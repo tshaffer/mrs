@@ -1,6 +1,6 @@
 {
-  "name": "ts-mongoose-express-boilerplate",
-  "version": "1.0.0",
+  "name": "mrs",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/server.js",
   "dependencies": {
