@@ -3,6 +3,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import * as path from 'path';
 
+import Restaurant from './models/restaurant';
+
 // import { Routes } from './routes/routes';
 
 const mongoDB = 'mongodb://ted:memoRappTed0524@ds243607.mlab.com:43607/memorapp';
@@ -22,8 +24,21 @@ class App {
     mongoose.Promise = global.Promise;
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+    db.once('open', function callback() {
+      console.log('memoRapp db open successful');
+    });
 
     console.log('end of constructor');
+  }
+
+  addRestaurant(restaurantDescription: any) {
+    const restaurant = new Restaurant(restaurantDescription);
+    restaurant.save((err) => {
+      if (err) {
+        console.log('err: ', err);
+        return;
+      }
+    });
   }
 
   private config(): void {
@@ -47,24 +62,23 @@ class App {
       }
     });
 
+    this.app.use(bodyParser.urlencoded({
+      extended: true,
+    }));
+
+    this.app.use(bodyParser.json());
+
     this.app.post('*', (req, res) => {
+      console.log('req:');
+      console.log(req);
       switch (req.path) {
         case '/addRestaurant':
           console.log('addRestaurant:');
           console.log(req.body);
-          // addRestaurant(req.body);
+          this.addRestaurant(req.body);
           break;
       }
     });
-    
-    // support application/json type post data
-    this.app.use(bodyParser.json());
-
-    // support application/x-www-form-urlencoded post data
-    this.app.use(bodyParser.urlencoded({ extended: false }));
-    // app.use(bodyParser.urlencoded({
-    //   extended: true
-    // }))
 
     this.app.set('port', process.env.PORT || 8000);
   }

@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var RestaurantSchema = new Schema(
+const RestaurantSchema = new Schema(
   {
     id: { type: String, required: true },
     name: { type: String, required: true, max: 100 },
@@ -17,6 +17,5 @@ var RestaurantSchema = new Schema(
   }
 );
 
-// export default mongoose.model('Restaurant', RestaurantSchema);
-module.exports = mongoose.model('Restaurant', RestaurantSchema);
+export default mongoose.model('Restaurant', RestaurantSchema);
 
