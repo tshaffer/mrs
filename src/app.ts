@@ -19,6 +19,11 @@ class App {
     this.config();
     this.route.routes(this.app);
 
+    // Workaround to allow empty strings
+    // https://github.com/Automattic/mongoose/issues/7150
+    const Str = mongoose.Schema.Types.String as any;
+    Str.checkRequired((v: any) => v != null);
+
     mongoose.connect(mongoDB);
     mongoose.Promise = global.Promise;
     const db = mongoose.connection;
@@ -37,18 +42,6 @@ class App {
     }));
 
     this.app.use(bodyParser.json());
-
-    // this.app.post('*', (req, res) => {
-    //   console.log('req:');
-    //   console.log(req);
-    //   switch (req.path) {
-    //     case '/addRestaurant':
-    //       console.log('addRestaurant:');
-    //       console.log(req.body);
-    //       this.addRestaurant(req.body);
-    //       break;
-    //   }
-    // });
 
     this.app.set('port', process.env.PORT || 8000);
   }
