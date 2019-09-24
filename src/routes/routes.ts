@@ -1,37 +1,24 @@
-// import express from 'express';
+import express from 'express';
+import { 
+  getIndex,
+  getCSS,
+  getBundle,
+ } from '../controllers/mainController';
+import {
+  addRestaurantHandler,
+} from '../controllers/restaurant';
 
-// import { getCode, handleAuthCallback } from '../controllers/oauth2Controller';
-// import {
-//   generateAlbumsList,
-//   start,
-// } from '../controllers/homeController';
-// import {
-//   downloadNewAlbums,
-//   regenerateManifest,
-//   showAlbumsStatus,
-//   synchronizeAlbumNames,
-// } from '../controllers/albumsController';
-// import { 
-//   checkForContent,
-// } from '../controllers/checkForContentController';
-// import { eventHandler } from '../controllers/events';
+export class Routes {
 
-// export class Routes {
+  public routes(app: express.Application): void {
+    this.createRoutes(app);
+  }
 
-//   public routes(app: express.Application): void {
-//     this.createRoutes(app);
-//   }
-
-//   createRoutes(app: express.Application) {
-//     app.get('/', getCode);
-//     app.get('/authCallback.*', handleAuthCallback);
-//     app.get('/checkForNewContent', checkForContent);
-//     app.get('/generateAlbumsList', generateAlbumsList);
-//     app.get('/showsAlbumsStatus', showAlbumsStatus);
-//     app.get('/synchronizeAlbumNames', synchronizeAlbumNames);
-//     app.get('/downloadNewAlbums', downloadNewAlbums);
-//     app.get('/regenerateManifest', regenerateManifest);
-//     app.get('/events', eventHandler);
-//     app.get('/home', start);
-//   }
-// }
+  createRoutes(app: express.Application) {
+    app.get('/', getIndex);
+    app.get('/index.html', getIndex);
+    app.get('/css/app.css', getCSS);
+    app.get('/build/bundle.js', getBundle);
+    app.post('*', addRestaurantHandler);
+  }
+}
