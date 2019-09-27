@@ -14,7 +14,7 @@ export function addRestaurantHandler(request: Request, response: Response) {
           console.log('addRestaurant returned:');
           console.log(doc);
           response.end('ok');
-        }).catch( (err: any) => {
+        }).catch((err: any) => {
           console.log('err returned from addRestaurant');
           console.log(err);
         });
@@ -31,4 +31,25 @@ function addRestaurant(restaurantDescription: any) {
   //     return;
   //   }
   // });
+}
+
+export function getRestaurant(request: Request, response: Response) {
+
+  const restaurantId = request.query.restaurantId;
+  console.log(request.query);
+  console.log(Object.keys(request.query));
+  console.log('restaurantId: ', restaurantId);
+
+  const query = Restaurant.find({ id: restaurantId });
+  // const query = Restaurant.find({});
+  query.exec((err: any, docs: any) => {
+    if (err) {
+      console.log('err: ', err);
+    }
+    console.log('docs');
+    console.log('length: ', docs.length);
+    console.log(docs);
+  });
+
+  response.sendStatus(200);
 }
