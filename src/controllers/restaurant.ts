@@ -92,12 +92,64 @@ export function setRestaurant(request: Request, response: Response) {
     .then((docs: any[]) => {
 
       if (!isNil(docs) && docs.length > 0) {
+
+        console.log('restaurant already exists in db, perform overwrite');
+
         // only take first result for now
         const dbRestaurant: DbRestaurant = docs[0] as DbRestaurant;
-        console.log('dbRestaurant');
-        console.log(dbRestaurant);
+
+        // docs[0]._doc
+        // or individual properties including _id
+        // what if I take the individual properties and not the db id?
+
+        // restaurant already exists - just overwrite it
+        // const updatedRestaurant = Object.assign(
+        //   {}, dbRestaurant, restaurant);
+        // console.log(updatedRestaurant);
+
+        // const updatedRestaurant: DbRestaurant = {
+        //  _id: dbRestaurant._id,
+        //  restaurantId: dbRestaurant.restaurantId,
+        //  name: dbRestaurant.name,
+        //  category: dbRestaurant.category,
+        //  overallRating: dbRestaurant.overallRating,
+        //  foodRating: dbRestaurant.foodRating,
+        //  serviceRating: dbRestaurant.serviceRating,
+        //  ambienceRating: dbRestaurant.ambienceRating,
+        //  outdoorSeating: dbRestaurant.outdoorSeating,
+        //  comments: dbRestaurant.comments,
+        //  wouldVisitAgain: dbRestaurant.wouldVisitAgain,       
+        // };
+
+        const baseRestaurant: DbRestaurant = {
+          _id: dbRestaurant._id,
+          restaurantId: dbRestaurant.restaurantId,
+          name: dbRestaurant.name,
+          category: dbRestaurant.category,
+          overallRating: dbRestaurant.overallRating,
+          foodRating: dbRestaurant.foodRating,
+          serviceRating: dbRestaurant.serviceRating,
+          ambienceRating: dbRestaurant.ambienceRating,
+          outdoorSeating: dbRestaurant.outdoorSeating,
+          comments: dbRestaurant.comments,
+          wouldVisitAgain: dbRestaurant.wouldVisitAgain,
+        };
+
+        // const updatedRestaurant: DbRestaurant = Object.assign(
+        //   {},
+        //   { ...dbRestaurant },
+        //   { ...restaurant },
+        // );
+        const updatedRestaurant: DbRestaurant = Object.assign(
+          baseRestaurant,
+          { ...restaurant },
+        );
+        console.log(updatedRestaurant);
+
       } else {
-        console.log('restaurant does not exist in db');
+        console.log('restaurant does not exist in db, perform insert');
+
+        // restaurant doesn't exist - add it.
       }
 
       // console.log('getRestaurantById resolved promise');

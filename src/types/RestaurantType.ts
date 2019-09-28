@@ -12,7 +12,7 @@ export interface RestaurantDataState { // BaPeUiLiveTextDataFeedsDataState
   menuItems: RestaurantMenuItemMap;
 }
 
-export interface DbRestaurant {
+export interface DbRestaurant extends RestaurantDescription {
   _id: number;
 };
 
