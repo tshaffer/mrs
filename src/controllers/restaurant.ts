@@ -69,22 +69,11 @@ export function getAllRestaurants() {
 export function getRestaurantByRestaurantId(restaurantId: string): Promise<any[]> {
   const query = Restaurant.find({ restaurantId });
   return query.exec();
-
-  // const existingRestaurant: any = docs[0] as any;
-  // existingRestaurant.overallRating = 6.9;
-  // existingRestaurant.save()
-  //   .then(() => {
-  //     console.log('restaurant updated');
-  //   }).catch((updateErr: any) => {
-  //     console.log(updateErr);
-  //   });
-  // });
 }
 
 export function setRestaurant(request: Request, response: Response) {
 
   console.log('setRestaurant:');
-  console.log(request.body);
 
   const restaurant = request.body as RestaurantDescription;
 
@@ -98,93 +87,35 @@ export function setRestaurant(request: Request, response: Response) {
         // only take first result for now
         const dbRestaurant: DbRestaurant = docs[0] as DbRestaurant;
 
-        // docs[0]._doc
-        // or individual properties including _id
-        // what if I take the individual properties and not the db id?
-
-        // restaurant already exists - just overwrite it
-        // const updatedRestaurant = Object.assign(
-        //   {}, dbRestaurant, restaurant);
-        // console.log(updatedRestaurant);
-
-        // const updatedRestaurant: DbRestaurant = {
-        //  _id: dbRestaurant._id,
-        //  restaurantId: dbRestaurant.restaurantId,
-        //  name: dbRestaurant.name,
-        //  category: dbRestaurant.category,
-        //  overallRating: dbRestaurant.overallRating,
-        //  foodRating: dbRestaurant.foodRating,
-        //  serviceRating: dbRestaurant.serviceRating,
-        //  ambienceRating: dbRestaurant.ambienceRating,
-        //  outdoorSeating: dbRestaurant.outdoorSeating,
-        //  comments: dbRestaurant.comments,
-        //  wouldVisitAgain: dbRestaurant.wouldVisitAgain,       
-        // };
-
-        const baseRestaurant: DbRestaurant = {
-          _id: dbRestaurant._id,
-          restaurantId: dbRestaurant.restaurantId,
-          name: dbRestaurant.name,
-          category: dbRestaurant.category,
-          overallRating: dbRestaurant.overallRating,
-          foodRating: dbRestaurant.foodRating,
-          serviceRating: dbRestaurant.serviceRating,
-          ambienceRating: dbRestaurant.ambienceRating,
-          outdoorSeating: dbRestaurant.outdoorSeating,
-          comments: dbRestaurant.comments,
-          wouldVisitAgain: dbRestaurant.wouldVisitAgain,
-        };
-
+        // update values of existing restaurant with specified restaurant
         const updatedRestaurant: any = Object.assign(
-          {},
-          { ...dbRestaurant },
+          dbRestaurant,
           { ...restaurant },
         );
         updatedRestaurant.save()
           .then(() => {
-            console.log('restaurant updated');
+            console.log('restaurant successfully updated');
           }).catch((updateErr: any) => {
+            console.log('restaurant update failed');
             console.log(updateErr);
           });
-
-        // const updatedRestaurant: DbRestaurant = Object.assign(
-        //   baseRestaurant,
-        //   { ...restaurant },
-        // );
-        console.log(updatedRestaurant);
-
-
-
       } else {
         console.log('restaurant does not exist in db, perform insert');
 
         // restaurant doesn't exist - add it.
       }
-
-      // console.log('getRestaurantById resolved promise');
-      // console.log(isNil(docs));
-      // if (!isNil(docs)) {
-      //   console.log(docs.length);
-      //   if (docs.length > 0) {
-      //     console.log(docs[0]);
-      //   }
-      // }
+      // addRestaurant(request.body)
+      //   .then((doc: any) => {
+      //     console.log('addRestaurant returned:');
+      //     console.log(doc);
+      //     response.end('ok');
+      //   }).catch((err: any) => {
+      //     console.log('err returned from addRestaurant');
+      //     console.log(err);
+      //   });
     });
-  // .then((dbRestaurant: RestaurantDescription) => {
-  //   console.log('getRestaurantById returned');
-  //   console.log(dbRestaurant);
-  // }).catch((err: any) => {
-  //   console.log('err', err);
-  // });
+
+  // respond immediately or wait for the result of db operation?
   response.sendStatus(200);
-  // addRestaurant(request.body)
-  //   .then((doc: any) => {
-  //     console.log('addRestaurant returned:');
-  //     console.log(doc);
-  //     response.end('ok');
-  //   }).catch((err: any) => {
-  //     console.log('err returned from addRestaurant');
-  //     console.log(err);
-  //   });
 }
 
