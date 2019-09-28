@@ -5,7 +5,7 @@ import {
   getBundle,
  } from '../controllers/mainController';
 import {
-  addRestaurantHandler,
+  setRestaurant,
   getRestaurant,
 } from '../controllers/restaurant';
 
@@ -20,7 +20,7 @@ export class Routes {
     app.get('/index.html', getIndex);
     app.get('/css/app.css', getCSS);
     app.get('/build/bundle.js', getBundle);
-    app.post('*', addRestaurantHandler);
     app.get('/getRestaurant', getRestaurant);
+    app.post('/restaurant', setRestaurant);
   }
 }
