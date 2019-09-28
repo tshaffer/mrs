@@ -135,16 +135,25 @@ export function setRestaurant(request: Request, response: Response) {
           wouldVisitAgain: dbRestaurant.wouldVisitAgain,
         };
 
-        // const updatedRestaurant: DbRestaurant = Object.assign(
-        //   {},
-        //   { ...dbRestaurant },
-        //   { ...restaurant },
-        // );
-        const updatedRestaurant: DbRestaurant = Object.assign(
-          baseRestaurant,
+        const updatedRestaurant: any = Object.assign(
+          {},
+          { ...dbRestaurant },
           { ...restaurant },
         );
+        updatedRestaurant.save()
+          .then(() => {
+            console.log('restaurant updated');
+          }).catch((updateErr: any) => {
+            console.log(updateErr);
+          });
+
+        // const updatedRestaurant: DbRestaurant = Object.assign(
+        //   baseRestaurant,
+        //   { ...restaurant },
+        // );
         console.log(updatedRestaurant);
+
+
 
       } else {
         console.log('restaurant does not exist in db, perform insert');
