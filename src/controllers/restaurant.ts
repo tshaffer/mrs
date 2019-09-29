@@ -6,53 +6,13 @@ import { isNil } from 'lodash';
 
 export function getAllRestaurants(request: Request, response: Response) {
   console.log('getAllRestaurants');
-  const query = Restaurant.find({ });
+  const query = Restaurant.find({});
   return query.exec()
-    .then( (docs: Document[]) => {
+    .then((docs: Document[]) => {
       response.json(docs);
-    }).catch( (err: Error) => {
+    }).catch((err: Error) => {
       console.log('getAllRestaurants: ', err);
     });
-  }
-
-function getRestaurantByRestaurantId(restaurantId: string): Promise<Document[]> {
-  const query = Restaurant.find({ restaurantId });
-  return query.exec();
-}
-
-export function getRestaurant(request: Request, response: Response) {
-
-  const restaurantId = request.query.restaurantId;
-  console.log(request.query);
-  console.log(Object.keys(request.query));
-  console.log('restaurantId: ', restaurantId);
-
-  const query = Restaurant.find({ restaurantId });
-  // const query = Restaurant.find({});
-  query.exec((err: any, docs: any) => {
-    if (err) {
-      console.log('err: ', err);
-    }
-    console.log('docs');
-    console.log('length: ', docs.length);
-    console.log(docs[0]);
-
-    const existingRestaurant: any = docs[0] as any;
-    existingRestaurant.overallRating = 6.9;
-    existingRestaurant.save()
-      .then(() => {
-        console.log('restaurant updated');
-      }).catch((updateErr: any) => {
-        console.log(updateErr);
-      });
-  });
-
-  response.sendStatus(200);
-}
-
-function addRestaurant(restaurantDescription: RestaurantDescription): Promise<Document> {
-  const restaurant = new Restaurant(restaurantDescription);
-  return restaurant.save();
 }
 
 export function setRestaurant(request: Request, response: Response) {
@@ -102,6 +62,47 @@ export function setRestaurant(request: Request, response: Response) {
   // respond immediately or wait for the result of db operation?
   response.sendStatus(200);
 }
+
+function getRestaurantByRestaurantId(restaurantId: string): Promise<Document[]> {
+  const query = Restaurant.find({ restaurantId });
+  return query.exec();
+}
+
+function addRestaurant(restaurantDescription: RestaurantDescription): Promise<Document> {
+  const restaurant = new Restaurant(restaurantDescription);
+  return restaurant.save();
+}
+
+// Obsolete??
+// export function getRestaurant(request: Request, response: Response) {
+
+//   const restaurantId = request.query.restaurantId;
+//   console.log(request.query);
+//   console.log(Object.keys(request.query));
+//   console.log('restaurantId: ', restaurantId);
+
+//   const query = Restaurant.find({ restaurantId });
+//   // const query = Restaurant.find({});
+//   query.exec((err: any, docs: any) => {
+//     if (err) {
+//       console.log('err: ', err);
+//     }
+//     console.log('docs');
+//     console.log('length: ', docs.length);
+//     console.log(docs[0]);
+
+//     const existingRestaurant: any = docs[0] as any;
+//     existingRestaurant.overallRating = 6.9;
+//     existingRestaurant.save()
+//       .then(() => {
+//         console.log('restaurant updated');
+//       }).catch((updateErr: any) => {
+//         console.log(updateErr);
+//       });
+//   });
+
+//   response.sendStatus(200);
+// }
 
 // Obsolete??
 // export function addRestaurantHandler(request: Request, response: Response) {

@@ -14,7 +14,7 @@ const RestaurantSchema = new Schema(
     outdoorSeating: { type: Boolean },
     comments: { type: String, required: true, max: 100 },
     wouldVisitAgain: { type: Boolean },
-  }
+  },
 );
 
 export default mongoose.model('Restaurant', RestaurantSchema);
