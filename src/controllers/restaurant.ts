@@ -1,35 +1,30 @@
 import { Request, Response } from 'express';
-
+import { Document } from 'mongoose';
 import Restaurant from '../models/restaurant';
 import { RestaurantDescription, DbRestaurant } from 'RestaurantType';
 import { isNil } from 'lodash';
 
-export function addRestaurantHandler(request: Request, response: Response) {
-  console.log('request:');
-  console.log(request);
-  console.log('addRestaurant:');
-  console.log(request.body);
-  addRestaurant(request.body)
-    .then((doc: any) => {
-      console.log('addRestaurant returned:');
-      console.log(doc);
-      response.end('ok');
-    }).catch((err: any) => {
-      console.log('err returned from addRestaurant');
-      console.log(err);
-    });
-}
+// Obsolete??
+// export function addRestaurantHandler(request: Request, response: Response) {
+//   console.log('request:');
+//   console.log(request);
+//   console.log('addRestaurant:');
+//   console.log(request.body);
+//   addRestaurant(request.body)
+//     .then((doc: any) => {
+//       console.log('addRestaurant returned:');
+//       console.log(doc);
+//       response.end('ok');
+//     }).catch((err: any) => {
+//       console.log('err returned from addRestaurant');
+//       console.log(err);
+//     });
+// }
 
 
-function addRestaurant(restaurantDescription: any) {
+function addRestaurant(restaurantDescription: RestaurantDescription): Promise<Document> {
   const restaurant = new Restaurant(restaurantDescription);
   return restaurant.save();
-  // return restaurant.save((err: any) => {
-  //   if (err) {
-  //     console.log('err: ', err);
-  //     return;
-  //   }
-  // });
 }
 
 export function getRestaurant(request: Request, response: Response) {
@@ -66,7 +61,7 @@ export function getAllRestaurants() {
   console.log('getAllRestaurants');
 }
 
-export function getRestaurantByRestaurantId(restaurantId: string): Promise<any[]> {
+export function getRestaurantByRestaurantId(restaurantId: string): Promise<Document[]> {
   const query = Restaurant.find({ restaurantId });
   return query.exec();
 }
@@ -100,19 +95,19 @@ export function setRestaurant(request: Request, response: Response) {
             console.log(updateErr);
           });
       } else {
+
         console.log('restaurant does not exist in db, perform insert');
 
-        // restaurant doesn't exist - add it.
+        addRestaurant(restaurant)
+          .then((doc: any) => {
+            console.log('addRestaurant returned:');
+            console.log(doc);
+            response.end('ok');
+          }).catch((err: any) => {
+            console.log('err returned from addRestaurant');
+            console.log(err);
+          });
       }
-      // addRestaurant(request.body)
-      //   .then((doc: any) => {
-      //     console.log('addRestaurant returned:');
-      //     console.log(doc);
-      //     response.end('ok');
-      //   }).catch((err: any) => {
-      //     console.log('err returned from addRestaurant');
-      //     console.log(err);
-      //   });
     });
 
   // respond immediately or wait for the result of db operation?
