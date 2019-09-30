@@ -7,18 +7,18 @@ export interface RestaurantsState { // BaPeUiLiveTextDataFeedsState
 /** @internal */
 /** @private */
 export interface RestaurantDataState { // BaPeUiLiveTextDataFeedsDataState
-  restaurant: RestaurantDescription | {};
+  restaurant: RestaurantSummary | {};
   visits: RestaurantVisitMap;
   menuItems: RestaurantMenuItemMap;
 }
 
-export interface DbRestaurant extends RestaurantDescription {
+export interface DbRestaurant extends RestaurantSummary {
   _id: number;
-};
+}
 
 /** @internal */
 /** @private */
-export interface RestaurantDescription {
+export interface RestaurantSummary {
   restaurantId: string;
   name: string;
   category: number; // change to string?
@@ -33,14 +33,15 @@ export interface RestaurantDescription {
 
 /** @internal */
 /** @private */
-export interface RestaurantVisit {
-  id: string;
+export interface RestaurantVisitSummary {
+  restaurantVisitId: string;
   restaurantId: string;
   visitDate: Date;
+  comments: string;
 }
 
 export interface RestaurantVisitMap {
-  [id: string]: RestaurantVisit;
+  [restaurantVisitId: string]: RestaurantVisitSummary;
 }
 
 /** @internal */

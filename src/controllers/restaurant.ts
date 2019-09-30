@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Document } from 'mongoose';
 import Restaurant from '../models/restaurant';
-import { RestaurantDescription, DbRestaurant } from 'RestaurantType';
+import { RestaurantSummary, DbRestaurant } from 'RestaurantType';
 import { isNil } from 'lodash';
 
 export function getAllRestaurants(request: Request, response: Response) {
@@ -19,7 +19,7 @@ export function setRestaurant(request: Request, response: Response) {
 
   console.log('setRestaurant:');
 
-  const restaurant = request.body as RestaurantDescription;
+  const restaurant = request.body as RestaurantSummary;
 
   getRestaurantByRestaurantId(restaurant.restaurantId)
     .then((docs: any[]) => {
@@ -68,7 +68,7 @@ function getRestaurantByRestaurantId(restaurantId: string): Promise<Document[]> 
   return query.exec();
 }
 
-function addRestaurant(restaurantDescription: RestaurantDescription): Promise<Document> {
+function addRestaurant(restaurantDescription: RestaurantSummary): Promise<Document> {
   const restaurant = new Restaurant(restaurantDescription);
   return restaurant.save();
 }
