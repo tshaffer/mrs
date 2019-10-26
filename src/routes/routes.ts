@@ -8,7 +8,7 @@ import {
   setRestaurant,
   getAllRestaurants,
 } from '../controllers/restaurant';
-import { addRestaurantVisit } from '../controllers/restaurantVisit';
+import { setRestaurantVisit, getAllRestaurantVisits } from '../controllers/restaurantVisit';
 
 export class Routes {
 
@@ -23,6 +23,7 @@ export class Routes {
     app.get('/build/bundle.js', getBundle);
     app.get('/getAllRestaurants', getAllRestaurants);
     app.post('/restaurant', setRestaurant);
-    app.post('/addRestaurantVisit', addRestaurantVisit);
+    app.post('/restaurantVisit', setRestaurantVisit);
+    app.get('/getAllRestaurantVisits', getAllRestaurantVisits);
   }
 }

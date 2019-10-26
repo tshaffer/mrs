@@ -16,6 +16,10 @@ export interface DbRestaurant extends RestaurantSummary {
   _id: number;
 }
 
+export interface DbRestaurantVisit extends RestaurantVisitState {
+  _id: number;
+}
+
 /** @internal */
 /** @private */
 export interface RestaurantSummary {
@@ -33,7 +37,7 @@ export interface RestaurantSummary {
 
 /** @internal */
 /** @private */
-export interface RestaurantVisitSummary {
+export interface RestaurantVisitState {
   restaurantVisitId: string;
   restaurantId: string;
   visitDate: Date;
@@ -41,7 +45,7 @@ export interface RestaurantVisitSummary {
 }
 
 export interface RestaurantVisitMap {
-  [restaurantVisitId: string]: RestaurantVisitSummary;
+  [restaurantVisitId: string]: RestaurantVisitState;
 }
 
 /** @internal */
