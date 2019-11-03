@@ -30731,9 +30731,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(168);
 var model_1 = __webpack_require__(82);
 var application_1 = __webpack_require__(101);
+var serverUrl = 'https://desolate-lake-74291.herokuapp.com:8000';
 exports.loadRestaurants = function () {
     return function (dispatch, getState) {
-        var path = 'http://localhost:8000/getAllRestaurants';
+        var path = serverUrl + '/getAllRestaurants';
         axios_1.default.get(path)
             .then(function (response) {
             var restaurants = response.data;
@@ -30748,7 +30749,7 @@ exports.loadRestaurants = function () {
 };
 exports.saveRestaurant = function (restaurant) {
     return function (dispatch, getState) {
-        var path = 'http://localhost:8000/restaurant';
+        var path = serverUrl + '/restaurant';
         return axios_1.default.post(path, restaurant)
             .then(function (response) {
             return Promise.resolve(response);
@@ -40988,9 +40989,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(168);
 var application_1 = __webpack_require__(101);
 var model_1 = __webpack_require__(82);
+var serverUrl = 'https://desolate-lake-74291.herokuapp.com:8000';
 exports.loadRestaurantVisits = function () {
     return function (dispatch, getState) {
-        var path = 'http://localhost:8000/getAllRestaurantVisits';
+        var path = serverUrl + '/getAllRestaurantVisits';
         axios_1.default.get(path)
             .then(function (response) {
             var restaurantVisits = response.data;
@@ -41011,7 +41013,7 @@ exports.loadRestaurantVisits = function () {
 };
 exports.saveRestaurantVisit = function (restaurantVisit) {
     return function (dispatch, getState) {
-        var path = 'http://localhost:8000/restaurantVisit';
+        var path = serverUrl + '/restaurantVisit';
         return axios_1.default.post(path, restaurantVisit)
             .then(function (response) {
             return Promise.resolve(response);
