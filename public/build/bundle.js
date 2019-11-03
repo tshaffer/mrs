@@ -30731,7 +30731,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(168);
 var model_1 = __webpack_require__(82);
 var application_1 = __webpack_require__(101);
-var serverUrl = 'https://desolate-lake-74291.herokuapp.com:8000';
+var serverUrl = 'https://desolate-lake-74291.herokuapp.com';
 exports.loadRestaurants = function () {
     return function (dispatch, getState) {
         var path = serverUrl + '/getAllRestaurants';
@@ -40989,7 +40989,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(168);
 var application_1 = __webpack_require__(101);
 var model_1 = __webpack_require__(82);
-var serverUrl = 'https://desolate-lake-74291.herokuapp.com:8000';
+var serverUrl = 'https://desolate-lake-74291.herokuapp.com';
 exports.loadRestaurantVisits = function () {
     return function (dispatch, getState) {
         var path = serverUrl + '/getAllRestaurantVisits';
