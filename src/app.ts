@@ -6,7 +6,8 @@ import * as path from 'path';
 
 import { Routes } from './routes/routes';
 
-const mongoDB = 'mongodb://ted:memoRappTed0524@ds243607.mlab.com:43607/memorapp';
+// const mongoDB = 'mongodb://ted:memoRappTed0524@ds243607.mlab.com:43607/memorapp';
+const mongoDB = process.env.MONGOLAB_URI; 
 
 class App {
 

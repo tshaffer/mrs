@@ -14,7 +14,8 @@ const bodyParser = __importStar(require("body-parser"));
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const routes_1 = require("./routes/routes");
-const mongoDB = 'mongodb://ted:memoRappTed0524@ds243607.mlab.com:43607/memorapp';
+// const mongoDB = 'mongodb://ted:memoRappTed0524@ds243607.mlab.com:43607/memorapp';
+const mongoDB = process.env.MONGOLAB_URI;
 class App {
     constructor() {
         this.route = new routes_1.Routes();
@@ -40,12 +41,9 @@ class App {
         }));
         this.app.use(bodyParser.json());
         let port = process.env.PORT;
-        console.log(port);
         if (port === undefined || port === null || port === '') {
             port = 8000;
         }
-        console.log(typeof port);
-        console.log(port);
         this.app.set('port', port);
     }
 }
